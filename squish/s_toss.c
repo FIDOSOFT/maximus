@@ -174,7 +174,12 @@ static int _stdc plcomp(const void *i1, const void *i2)
   struct _plist *p2=(struct _plist *)i2;
 
   if (p1->ldate.ldate==p2->ldate.ldate)
-    return 0;
+  {
+    /* Compare filenames to get packet files with the same timestamp        *
+     * in the right order                                                   */
+
+    return stricmp(p1->name, p2->name);
+  }
   else if (GEdate(&p1->ldate, &p2->ldate))
     return 1;
   else return -1;
