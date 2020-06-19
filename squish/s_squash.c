@@ -1259,8 +1259,7 @@ static void near RV_Send(byte *line,byte *ag[],NETADDR nn[],word num)
 
       if (mo->found.point != 0 &&
           nn[nod].point==POINT_ALL &&
-          !DestIsHereA(&nop) &&
-          (config.flag2 & FLAG2_BINKPT))
+          !DestIsHereA(&nop))
       {
         /* Unless we're performing explicit routing, send all mail for      *
          * other systems' points through their boss.                        */
@@ -2231,29 +2230,52 @@ static void near MakeArcBase(char *where, NETADDR *dest)
 
   fake=FixOutboundName(dest->zone);
 
-  /* Handle FroDo points just in the standard outbound area */
-
-  if (dest->point && (config.flag & FLAG_FRODO))
+  if (config.flag2 & FLAG2_AMIGA4D)
   {
-    (void)sprintf(where, "%sP%04hx%03hx",
-                  fake,
-                  (unsigned)dest->node,
-                  (unsigned)dest->point);
-  }
-  else if (dest->point && (config.flag2 & FLAG2_BINKPT))
-  {
-    /* Handle stupid binkleyterm points here */
+    /* Handle Amiga 4D outbound */
 
-    (void)sprintf(where, "%s%04hx%04hx.pnt",
+    (void)sprintf(where, "%s%u.%u.%u.%u",
                   fake,
+                  dest->zone,
                   (unsigned)dest->net,
-                  (unsigned)dest->node);
+                  (unsigned)dest->node,
+                  dest->point);
 
     if (!direxist(where))
       (void)make_dir(where);
 
-    (void)sprintf(where+strlen(where), PATH_DELIMS "%08hx",
-                  config.addr->point-dest->point);
+    (void)sprintf(where+strlen(where), PATH_DELIMS "%u.%u.%u.%u",
+                  dest->zone,
+                  (unsigned)dest->net,
+                  (unsigned)dest->node,
+                  dest->point);
+  }
+  else if (dest->point)
+  {
+    if (config.flag & FLAG_FRODO)
+    {
+      /* Handle FroDo points just in the standard outbound area */
+
+      (void)sprintf(where, "%sP%04hx%03hx",
+                    fake,
+                    (unsigned)dest->node,
+                    (unsigned)dest->point);
+    }
+    else
+    {
+      /* Handle Binkleyterm points here */
+
+      (void)sprintf(where, "%s%04hx%04hx.pnt",
+                    fake,
+                    (unsigned)dest->net,
+                    (unsigned)dest->node);
+
+      if (!direxist(where))
+        (void)make_dir(where);
+
+      (void)sprintf(where+strlen(where), PATH_DELIMS "%08hx",
+                    config.addr->point - dest->point);
+    }
   }
   else
   {
@@ -2275,23 +2297,28 @@ void MakeOutboundName(NETADDR *d, char *s)
   (void)strcpy(s, FixOutboundName(d->zone));
   s += strlen(s);
   
-
-  (void)sprintf(s, "%04hx%04hx", (unsigned)d->net, (unsigned)d->node);
-  s += strlen(s);
-  
-  if (d->point && (config.flag & FLAG_FRODO)==0 && 
-      (config.flag2 & FLAG2_BINKPT))
+  if (config.flag2 & FLAG2_AMIGA4D)
   {
-    (void)strcat(s, ".pnt");
-    s += strlen(s);
-
-    if (!direxist(orig))
-      (void)make_dir(orig);
-
-    (void)sprintf(s, PATH_DELIMS "%08hx", d->point);
+    (void)sprintf(s, "%u.%u.%u.%u", d->zone, (unsigned)d->net, (unsigned)d->node, d->point);
     s += strlen(s);
   }
-  
+  else
+  {
+    (void)sprintf(s, "%04hx%04hx", (unsigned)d->net, (unsigned)d->node);
+    s += strlen(s);
+
+    if (d->point && (config.flag & FLAG_FRODO)==0)
+    {
+      (void)strcat(s, ".pnt");
+      s += strlen(s);
+
+      if (!direxist(orig))
+        (void)make_dir(orig);
+
+      (void)sprintf(s, PATH_DELIMS "%08hx", d->point);
+      s += strlen(s);
+    }
+  }
   *s++='.';
   *s='\0';
 }

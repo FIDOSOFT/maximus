@@ -294,7 +294,7 @@ struct _tosspath
 #define FLAG2_NPTHRU  0x0002    /* Only scan non-passthru areas             */
 #define FLAG2_SWAP    0x0004    /* Swap to disk for xternal programs        */
 #define FLAG2_NUKE    0x0008    /* Nuke bundles who have no attaches        */
-#define FLAG2_BINKPT  0x0010    /* Use Bink 2.50+ method for point info     */
+#define FLAG2_AMIGA4D 0x0010    /* Use Amiga 4D outbound                    */
 #define FLAG2_NOSNDX  0x0020    /* No soundex name matching for remapper    */
 #define FLAG2_NOSTOMP 0x0040    /* Don't stomp packet header when routing   */
 #define FLAG2_KFFILE  0x0080    /* Kill forwarded files                     */
@@ -302,6 +302,7 @@ struct _tosspath
 #define FLAG2_DHEADER 0x0200    /* Dupecheck using the message header       */
 #define FLAG2_DMSGID  0x0400    /* Dupecheck using the MSGID                */
 #define FLAG2_LONGHDR 0x0800    /* Use the entire subject line for dupe chk */
+
 
 struct _config
 {

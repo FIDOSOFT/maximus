@@ -473,7 +473,7 @@ char *FixOutboundName(word zone)
       {
         if (zone==0xffff || (config.flag & FLAG_FRODO))
           (void)strcat(outname, ".sq");
-        else if (zone != config.addr->zone)
+        else if (zone != config.addr->zone && (config.flag2 & FLAG2_AMIGA4D)==0)
           (void)sprintf(outname+strlen(outname), ".%03hx", zone);
       }
 

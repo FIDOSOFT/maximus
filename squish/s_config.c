@@ -1154,7 +1154,7 @@ static struct _cfgtable vt[]=
   {"oldarcmailexts",  NULL,         VB_FLAG,NULL,             FLAG_OLDARCM},
   {"quietarc",        NULL,         VB_FLAG,NULL,             FLAG_QUIETARC},
   {"secure",          NULL,         VB_FLGT,NULL,             FLAG_SECURE},
-  {"binkpoint",       NULL,         VB_FLG2,NULL,             FLAG2_BINKPT},
+  {"amigaoutbound",   NULL,         VB_FLG2,NULL,             FLAG2_AMIGA4D},
   {"nuke",            NULL,         VB_FLG2,NULL,             FLAG2_NUKE},
   {"nosoundex",       NULL,         VB_FLG2,NULL,             FLAG2_NOSNDX},
   {"nostomp",         NULL,         VB_FLG2,NULL,             FLAG2_NOSTOMP},
