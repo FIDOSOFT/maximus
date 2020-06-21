@@ -4,16 +4,6 @@
 #include <string.h>
 #include <ctype.h>
 
-int stricmp(const char *a, const char *b)
-{
-  return strcasecmp(a, b);
-}
-
-int strnicmp(const char *a, const char *b, size_t n)
-{
-  return strncasecmp(a, b, n);
-}
-
 char *strupr(char *sOrig)
 {
   char *s = sOrig;
