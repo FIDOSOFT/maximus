@@ -29,9 +29,9 @@
 #
 #
 
-SQUISH_LIB_DIRS = btree slib unix msgapi squish
-SQAFIX_LIB_DIRS = msgapi sqafix
-MAX_LIB_DIRS	= slib unix msgapi mex prot comdll 
+SQUISH_LIB_DIRS = slib unix msgapi squish
+SQAFIX_LIB_DIRS = slib unix msgapi sqafix
+MAX_LIB_DIRS	= btree slib unix msgapi mex prot comdll
 LIB_DIRS	= $(SQUISH_LIB_DIRS) $(SQAFIX_LIB_DIRS) $(MAX_LIB_DIRS)
 PROG_DIRS	= squish max mex util 
 DIRS		= $(LIB_DIRS) $(PROG_DIRS) sqafix
