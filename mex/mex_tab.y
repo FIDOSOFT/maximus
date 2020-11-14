@@ -513,7 +513,7 @@ else_part       :       /* epsilon */
                                   $$.else_label=this_quad;
                                 }
                 |       T_ELSE 
-                                { ElseHandler(&$$); }
+                                { ElseHandler(&$<elsetype>$); }
                         statement
                                 { $$=$<elsetype>2; }
                 ;
